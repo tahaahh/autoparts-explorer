@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101820"><meta name="description" content="كتالوج تقني تفاعلي لقطع السيارات">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="assets/icon.svg">
+<link rel="stylesheet" href="styles.css">
+<title>AutoParts Explorer</title>
+</head>
+<body>
+<header class="topbar">
+  <div class="brandmark">AP</div><div><h1>AutoParts Explorer</h1><p data-i18n="subtitle">مرجع تقني لقطع السيارات</p></div>
+  <button id="langBtn" class="iconbtn" aria-label="Language">ع / EN</button>
+</header>
+<main>
+  <section class="searchrow">
+    <input id="search" type="search" placeholder="ابحث عن شركة، سيارة، محرك أو قطعة..." autocomplete="off">
+    <button id="clearSearch" class="secondary">مسح</button>
+  </section>
+  <nav class="tabs">
+    <button class="tab active" data-tab="vehicles">السيارات</button>
+    <button class="tab" data-tab="systems">الأنظمة</button>
+    <button class="tab" data-tab="diagram">المخطط</button>
+    <button class="tab" data-tab="favorites">المفضلة</button>
+    <button class="tab" data-tab="data">البيانات</button>
+  </nav>
+  <div id="notice" class="notice">تعمل الواجهة محلياً. البيانات المعروضة تجريبية وليست كتالوجاً عالمياً كاملاً.</div>
+  <section id="vehicles" class="panel active">
+    <div class="sectionhead"><div><h2>اختيار السيارة</h2><p>اختر مركبة لعرض الأنظمة والقطع المتاحة في البيانات المحلية.</p></div><span id="vehicleCount" class="pill"></span></div>
+    <div id="vehicleList" class="vehicle-grid"></div>
+  </section>
+  <section id="systems" class="panel">
+    <div class="sectionhead"><div><h2>أنظمة السيارة</h2><p id="selectedVehicleLabel">اختر سيارة أولاً</p></div></div>
+    <div id="systemList" class="system-list"></div>
+  </section>
+  <section id="diagram" class="panel">
+    <div class="sectionhead"><div><h2>مخطط تفاعلي</h2><p>المس الأرقام لتحديد العنصر. اسحب للتنقل واستخدم + و− للتكبير.</p></div></div>
+    <div class="diagram-toolbar"><button id="zoomOut">−</button><button id="zoomReset">إعادة الضبط</button><button id="zoomIn">+</button></div>
+    <div id="diagramViewport" class="diagram-viewport">
+      <svg id="diagramSvg" viewBox="0 0 800 500" role="img" aria-label="مخطط تجريبي لمحرك"></svg>
+    </div>
+    <div id="partDetails" class="part-details"><h3>اختر رقماً في المخطط</h3><p>ستظهر هنا تفاصيل القطعة.</p></div>
+    <div class="part-list-wrap"><h3>قائمة عناصر المخطط</h3><div id="diagramParts" class="part-list"></div></div>
+  </section>
+  <section id="favorites" class="panel">
+    <div class="sectionhead"><div><h2>المفضلة</h2><p>تُحفظ على هذا الجهاز.</p></div></div>
+    <div id="favoritesList" class="part-list"></div>
+  </section>
+  <section id="data" class="panel">
+    <div class="sectionhead"><div><h2>إدارة البيانات</h2><p>استورد ملف JSON من مصدر تثق به أو صدّر بياناتك المحلية.</p></div></div>
+    <div class="data-card">
+      <h3>استيراد حزمة JSON</h3>
+      <p>يجب أن تحتوي الحزمة على vehicles وsystems وparts وdiagramItems. راجع README لمعرفة البنية.</p>
+      <input id="importFile" type="file" accept=".json,application/json">
+      <button id="importBtn">استيراد الحزمة</button>
+    </div>
+    <div class="data-card">
+      <h3>نسخة احتياطية</h3><p>صدّر البيانات الحالية والمفضلة للاحتفاظ بها أو نقلها.</p>
+      <button id="exportBtn">تصدير JSON</button>
+      <button id="resetBtn" class="danger">استعادة البيانات التجريبية</button>
+    </div>
+    <div class="data-card">
+      <h3>مصادر البيانات</h3>
+      <ul><li><a href="https://vpic.nhtsa.dot.gov/api/" target="_blank" rel="noreferrer">NHTSA vPIC</a>: بيانات تعريف المركبات وVIN؛ تغطية غير عالمية ولا يوفر مخططات قطع كاملة.</li>
+      <li><a href="https://github.com/vehiclesdb/vehiclesdb" target="_blank" rel="noreferrer">VehiclesDB</a>: مشروع بيانات مركبات؛ تحقق من الترخيص والإصدار قبل الاستيراد.</li></ul>
+      <p class="warning">لا تستورد رسومات أو كتالوجات محمية بحقوق النشر دون إذن. أرقام القطع والتوافق غير مؤكدة إلا إذا وثّقها مصدر موثوق.</p>
+    </div>
+  </section>
+</main>
+<footer><span>AutoParts Explorer · إصدار تجريبي</span><span id="offlineStatus">جارٍ فحص وضع الاتصال…</span></footer>
+<script src="app.js"></script>
+</body></html>
