@@ -1,18 +1,20 @@
 {
-  "name": "AutoParts Explorer",
+  "id": "./",
+  "name": "AutoParts Explorer — مرجع قطع السيارات",
   "short_name": "AutoParts",
   "description": "Offline-first interactive automotive parts reference",
-  "start_url": "./index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#0b1117",
   "theme_color": "#101820",
   "lang": "ar",
+  "dir": "rtl",
+  "categories": ["education", "utilities"],
   "icons": [
-    {
-      "src": "assets/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "./assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

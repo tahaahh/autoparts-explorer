@@ -1,72 +1,101 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101820"><meta name="description" content="كتالوج تقني تفاعلي لقطع السيارات">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="assets/icon.svg">
-<link rel="stylesheet" href="styles.css">
-<title>AutoParts Explorer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="مرجع تقني تفاعلي لقطع السيارات يعمل دون اتصال">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>AutoParts Explorer</title>
 </head>
 <body>
-<header class="topbar">
-  <div class="brandmark">AP</div><div><h1>AutoParts Explorer</h1><p data-i18n="subtitle">مرجع تقني لقطع السيارات</p></div>
-  <button id="langBtn" class="iconbtn" aria-label="Language">ع / EN</button>
-</header>
-<main>
-  <section class="searchrow">
-    <input id="search" type="search" placeholder="ابحث عن شركة، سيارة، محرك أو قطعة..." autocomplete="off">
-    <button id="clearSearch" class="secondary">مسح</button>
-  </section>
-  <nav class="tabs">
-    <button class="tab active" data-tab="vehicles">السيارات</button>
-    <button class="tab" data-tab="systems">الأنظمة</button>
-    <button class="tab" data-tab="diagram">المخطط</button>
-    <button class="tab" data-tab="favorites">المفضلة</button>
-    <button class="tab" data-tab="data">البيانات</button>
-  </nav>
-  <div id="notice" class="notice">تعمل الواجهة محلياً. البيانات المعروضة تجريبية وليست كتالوجاً عالمياً كاملاً.</div>
-  <section id="vehicles" class="panel active">
-    <div class="sectionhead"><div><h2>اختيار السيارة</h2><p>اختر مركبة لعرض الأنظمة والقطع المتاحة في البيانات المحلية.</p></div><span id="vehicleCount" class="pill"></span></div>
-    <div id="vehicleList" class="vehicle-grid"></div>
-  </section>
-  <section id="systems" class="panel">
-    <div class="sectionhead"><div><h2>أنظمة السيارة</h2><p id="selectedVehicleLabel">اختر سيارة أولاً</p></div></div>
-    <div id="systemList" class="system-list"></div>
-  </section>
-  <section id="diagram" class="panel">
-    <div class="sectionhead"><div><h2>مخطط تفاعلي</h2><p>المس الأرقام لتحديد العنصر. اسحب للتنقل واستخدم + و− للتكبير.</p></div></div>
-    <div class="diagram-toolbar"><button id="zoomOut">−</button><button id="zoomReset">إعادة الضبط</button><button id="zoomIn">+</button></div>
-    <div id="diagramViewport" class="diagram-viewport">
-      <svg id="diagramSvg" viewBox="0 0 800 500" role="img" aria-label="مخطط تجريبي لمحرك"></svg>
-    </div>
-    <div id="partDetails" class="part-details"><h3>اختر رقماً في المخطط</h3><p>ستظهر هنا تفاصيل القطعة.</p></div>
-    <div class="part-list-wrap"><h3>قائمة عناصر المخطط</h3><div id="diagramParts" class="part-list"></div></div>
-  </section>
-  <section id="favorites" class="panel">
-    <div class="sectionhead"><div><h2>المفضلة</h2><p>تُحفظ على هذا الجهاز.</p></div></div>
-    <div id="favoritesList" class="part-list"></div>
-  </section>
-  <section id="data" class="panel">
-    <div class="sectionhead"><div><h2>إدارة البيانات</h2><p>استورد ملف JSON من مصدر تثق به أو صدّر بياناتك المحلية.</p></div></div>
-    <div class="data-card">
-      <h3>استيراد حزمة JSON</h3>
-      <p>يجب أن تحتوي الحزمة على vehicles وsystems وparts وdiagramItems. راجع README لمعرفة البنية.</p>
-      <input id="importFile" type="file" accept=".json,application/json">
-      <button id="importBtn">استيراد الحزمة</button>
-    </div>
-    <div class="data-card">
-      <h3>نسخة احتياطية</h3><p>صدّر البيانات الحالية والمفضلة للاحتفاظ بها أو نقلها.</p>
-      <button id="exportBtn">تصدير JSON</button>
-      <button id="resetBtn" class="danger">استعادة البيانات التجريبية</button>
-    </div>
-    <div class="data-card">
-      <h3>مصادر البيانات</h3>
-      <ul><li><a href="https://vpic.nhtsa.dot.gov/api/" target="_blank" rel="noreferrer">NHTSA vPIC</a>: بيانات تعريف المركبات وVIN؛ تغطية غير عالمية ولا يوفر مخططات قطع كاملة.</li>
-      <li><a href="https://github.com/vehiclesdb/vehiclesdb" target="_blank" rel="noreferrer">VehiclesDB</a>: مشروع بيانات مركبات؛ تحقق من الترخيص والإصدار قبل الاستيراد.</li></ul>
-      <p class="warning">لا تستورد رسومات أو كتالوجات محمية بحقوق النشر دون إذن. أرقام القطع والتوافق غير مؤكدة إلا إذا وثّقها مصدر موثوق.</p>
-    </div>
-  </section>
-</main>
-<footer><span>AutoParts Explorer · إصدار تجريبي</span><span id="offlineStatus">جارٍ فحص وضع الاتصال…</span></footer>
-<script src="app.js"></script>
-</body></html>
+  <header class="topbar">
+    <div class="brandmark" aria-hidden="true">AP</div>
+    <div class="brand-copy"><h1>AutoParts Explorer</h1><p data-i18n="subtitle">مرجع تقني تفاعلي لقطع السيارات</p></div>
+    <button id="langBtn" class="iconbtn" aria-label="Change language">ع / EN / FR</button>
+  </header>
+  <main>
+    <section class="searchrow" aria-label="Search catalog">
+      <input id="search" type="search" placeholder="ابحث عن شركة، سيارة، محرك، قطعة أو رقم..." autocomplete="off" aria-label="Search">
+      <button id="clearSearch" class="secondary">مسح</button>
+    </section>
+    <div id="searchResults" class="search-results" hidden></div>
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-tab="vehicles">السيارات</button>
+      <button class="tab" data-tab="systems">الأنظمة</button>
+      <button class="tab" data-tab="diagram">المخطط</button>
+      <button class="tab" data-tab="favorites">المفضلة</button>
+      <button class="tab" data-tab="data">البيانات</button>
+    </nav>
+    <div id="demoNotice" class="notice" role="note">نموذج تجريبي: لا يحتوي على كتالوج OEM عالمي أو أرقام قطع موثقة.</div>
+
+    <section id="vehicles" class="panel active">
+      <div class="sectionhead"><div><h2 data-i18n="vehiclesHeading">اختيار السيارة</h2><p data-i18n="vehiclesHelp">اختر مركبة لعرض الأنظمة والتجميعات المتاحة في الحزمة المحلية.</p></div><span id="vehicleCount" class="pill"></span></div>
+      <div id="vehicleList" class="vehicle-grid"></div>
+    </section>
+
+    <section id="systems" class="panel">
+      <div class="sectionhead"><div><h2 data-i18n="systemsHeading">أنظمة السيارة</h2><p id="selectedVehicleLabel">اختر سيارة أولاً</p></div><button id="vehicleFavoriteBtn" class="secondary">حفظ السيارة</button></div>
+      <div id="systemList" class="system-list"></div>
+    </section>
+
+    <section id="diagram" class="panel">
+      <div class="sectionhead"><div><h2 data-i18n="diagramHeading">مخطط تفاعلي</h2><p id="diagramHint">المس الأرقام لتحديد العنصر. اسحب للتحريك، واستخدم التكبير.</p><p id="selectedAssemblyLabel" class="assembly-label"></p></div></div>
+      <div class="diagram-toolbar">
+        <button id="zoomOut" aria-label="Zoom out">−</button>
+        <button id="zoomReset" data-i18n="resetView">إعادة العرض</button>
+        <button id="zoomIn" aria-label="Zoom in">+</button>
+        <button id="diagramFavoriteBtn" class="secondary">حفظ المخطط</button>
+      </div>
+      <div id="diagramViewport" class="diagram-viewport"><svg id="diagramSvg" viewBox="0 0 800 500" role="img" aria-label="Interactive illustrative parts diagram"></svg></div>
+      <div id="partDetails" class="part-details"><h3>اختر رقماً في المخطط</h3><p>ستظهر هنا تفاصيل القطعة.</p></div>
+      <div class="part-list-wrap"><h3 data-i18n="calloutList">قائمة أرقام المخطط</h3><div id="diagramParts" class="part-list"></div></div>
+    </section>
+
+    <section id="favorites" class="panel">
+      <div class="sectionhead"><div><h2 data-i18n="favoritesHeading">المفضلة</h2><p data-i18n="favoritesHelp">تُحفظ محلياً على هذا الجهاز.</p></div></div>
+      <div id="favoritesList" class="part-list"></div>
+    </section>
+
+    <section id="data" class="panel">
+      <div class="sectionhead"><div><h2 id="dataTitle">البيانات</h2><p data-i18n="dataHelp">استورد حزم بيانات مرخصة ومتحققاً من مصدرها.</p></div></div>
+      <div class="data-card">
+        <h3 data-i18n="vehiclesPackHeading">قاعدة أسماء المركبات المجانية</h3>
+        <p data-i18n="vehiclesPackHelp">تتضمن 5,541 اسماً لطراز سيارات من قاعدة VehiclesDB؛ لا تحتوي على أجيال أو سنوات أو محركات أو قطع أو مخططات.</p>
+        <button id="loadVehiclesPackBtn" data-i18n="loadVehiclesPack">تحميل بيانات أسماء السيارات</button>
+        <a class="download-pack" href="./data/packs/vehiclesdb-open-cars.json" download data-i18n="downloadVehiclesPack">تنزيل ملف الحزمة</a>
+        <p id="dataAttribution" class="source-line" hidden></p>
+      </div>
+      <div class="data-card">
+        <h3 data-i18n="importHeading">استيراد حزمة JSON</h3>
+        <p id="importHelp">ملف JSON محلي حتى 25 ميغابايت. لا تستورد بيانات دون ترخيص.</p>
+        <input id="importFile" type="file" accept=".json,application/json">
+        <button id="importBtn">استيراد الحزمة</button>
+      </div>
+      <div class="data-card">
+        <h3 data-i18n="backupHeading">نسخة احتياطية</h3>
+        <p data-i18n="backupHelp">صدّر قاعدة البيانات والمفضلة للاحتفاظ بها أو نقلها.</p>
+        <button id="exportBtn">تصدير نسخة</button>
+        <button id="resetBtn" class="danger">استعادة بيانات المثال</button>
+      </div>
+      <div class="data-card">
+        <h3 data-i18n="sourcesHeading">مصادر بيانات للاستكشاف</h3>
+        <ul>
+          <li><a href="https://github.com/vehiclesdb/vehiclesdb/releases/tag/v2026.10.4" target="_blank" rel="noopener noreferrer">VehiclesDB open data</a>: حزمة أسماء السيارات المرفقة؛ CC BY 4.0 مع الإسناد وإشعارات المصادر الأصلية.</li>
+          <li><a href="https://vpic.nhtsa.dot.gov/api/" target="_blank" rel="noopener noreferrer">NHTSA vPIC</a>: تعريفات مركبات/VIN؛ ليست كتالوج قطع عالمياً.</li>
+          <li><a href="https://www.nhtsa.gov/nhtsa-datasets-and-apis" target="_blank" rel="noopener noreferrer">NHTSA recalls and complaints</a>: معلومات سلامة أمريكية وليست توافق قطع.</li>
+          <li><a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noopener noreferrer">Wikidata</a>: بيانات كيانات تحت CC0؛ تغطيتها متفاوتة ولا توفر قطع OEM.</li>
+          <li><a href="https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>: تحقق من رخصة كل صورة وإسنادها.</li>
+        </ul>
+        <p class="warning" data-i18n="legalNotice">لا تستورد رسومات أو كتالوجات محمية دون إذن. الرقم والتوافق غير مؤكدين إلا إذا وثقهما مصدر موثوق.</p>
+      </div>
+    </section>
+  </main>
+  <footer><span>AutoParts Explorer · <span data-i18n="demoVersion">إصدار تجريبي</span></span><span id="offlineStatus">جارٍ فحص وضع الاتصال…</span></footer>
+  <button id="installBtn" class="install-btn" hidden data-i18n="install">تثبيت التطبيق</button>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

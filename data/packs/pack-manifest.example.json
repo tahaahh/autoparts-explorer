@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "packId": "example.make.market",
+    "version": "1.0.0",
+    "schemaVersion": 1,
+    "title": "Example licensed data pack",
+    "builtAt": "2026-01-01T00:00:00Z",
+    "coverage": { "makes": [], "markets": [], "years": [] },
+    "sources": [
+      {
+        "id": "source-example",
+        "name": "Replace with the actual data provider",
+        "url": "https://example.org/dataset",
+        "license": "Replace with the exact redistribution license",
+        "attribution": "Replace with the required attribution"
+      }
+    ],
+    "recordCounts": { "vehicles": 0, "engines": 0, "systems": 0, "assemblies": 0, "parts": 0, "diagrams": 0, "diagramItems": 0 },
+    "sha256": ""
+  },
+  "db": {
+    "meta": { "name": "Example data pack", "version": 1 },
+    "vehicles": [],
+    "engines": [],
+    "systems": [],
+    "assemblies": [],
+    "parts": [],
+    "diagrams": [],
+    "diagramItems": []
+  }
+}
